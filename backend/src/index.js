@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 
 // ---- ROUTES -----------------------------------------------
+app.use('/api/candidates', require('./routes/candidateRoutes'));
 app.use('/api/auth',      require('./routes/authRoutes'));
 // More routes will be added here as we build each feature:
 app.use('/api/elections', require('./routes/electionRoutes'));
