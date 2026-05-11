@@ -1,26 +1,181 @@
+/* ============================================================
+   D-Evotes — Global Styles
+   Dark & Light theme CSS variables
+============================================================ */
+
+/* ---- FONTS ----------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 @import "tailwindcss";
-
+/* ---- CSS CUSTOM PROPERTIES ------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --font-space: 'Space Grotesk', sans-serif;
+    --font-mono:  'JetBrains Mono', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ---- DARK THEME (default) -------------------------------- */
+[data-theme="dark"] {
+    --bg-base:          #060a0f;
+    --bg-surface:       #0d1520;
+    --bg-card:          rgba(13, 21, 32, 0.75);
+    --bg-input:         rgba(0, 0, 0, 0.4);
+    --bg-hover:         rgba(255, 255, 255, 0.04);
+
+    --cyan:             #00e5ff;
+    --cyan-dim:         #00b8d4;
+    --cyan-glow:        rgba(0, 229, 255, 0.15);
+    --cyan-glow-hard:   rgba(0, 229, 255, 0.35);
+
+    --green:            #00ff88;
+    --red:              #ff4d6d;
+    --amber:            #ffb830;
+    --purple:           #b06afa;
+
+    --text-primary:     #e8f4f8;
+    --text-secondary:   #7a9bb5;
+    --text-muted:       #4a6278;
+
+    --border:           rgba(0, 229, 255, 0.12);
+    --border-hover:     rgba(0, 229, 255, 0.4);
+
+    --grid-line:        rgba(0, 229, 255, 0.025);
+
+    --toast-bg:         #0d1520;
+    --toast-color:      #e8f4f8;
+    --toast-border:     rgba(0, 229, 255, 0.2);
+
+    --shadow-glow:      0 0 40px rgba(0, 229, 255, 0.07);
+    --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---- LIGHT THEME ---------------------------------------- */
+[data-theme="light"] {
+    --bg-base:          #f0f4f8;
+    --bg-surface:       #ffffff;
+    --bg-card:          rgba(255, 255, 255, 0.85);
+    --bg-input:         rgba(255, 255, 255, 0.9);
+    --bg-hover:         rgba(0, 0, 0, 0.04);
+
+    --cyan:             #0077aa;
+    --cyan-dim:         #005f8a;
+    --cyan-glow:        rgba(0, 119, 170, 0.12);
+    --cyan-glow-hard:   rgba(0, 119, 170, 0.3);
+
+    --green:            #00aa55;
+    --red:              #dd2244;
+    --amber:            #cc8800;
+    --purple:           #7c3aed;
+
+    --text-primary:     #0d1520;
+    --text-secondary:   #4a6278;
+    --text-muted:       #8a9bb0;
+
+    --border:           rgba(0, 100, 150, 0.15);
+    --border-hover:     rgba(0, 100, 150, 0.4);
+
+    --grid-line:        rgba(0, 100, 150, 0.06);
+
+    --toast-bg:         #ffffff;
+    --toast-color:      #0d1520;
+    --toast-border:     rgba(0, 100, 150, 0.2);
+
+    --shadow-glow:      0 0 40px rgba(0, 119, 170, 0.08);
+    --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- BASE STYLES ----------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin:     0;
+    padding:    0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family:      var(--font-space);
+    background-color: var(--bg-base);
+    color:            var(--text-primary);
+    min-height:       100vh;
+    transition:       background-color 0.3s ease, color 0.3s ease;
+    overflow-x:       hidden;
 }
+
+/* ---- ANIMATED GRID BACKGROUND ---------------------------- */
+body::before {
+    content:          '';
+    position:         fixed;
+    inset:            0;
+    background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:  40px 40px;
+    pointer-events:   none;
+    z-index:          0;
+}
+
+/* ---- FONT UTILITIES -------------------------------------- */
+.font-space { font-family: var(--font-space); }
+.font-mono  { font-family: var(--font-mono); }
+
+/* ---- GLASS CARD ------------------------------------------ */
+.glass-card {
+    background:    var(--bg-card);
+    border:        1px solid var(--border);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition:    border-color 0.2s, box-shadow 0.2s;
+}
+
+.glass-card:hover {
+    border-color: var(--border-hover);
+    box-shadow:   var(--shadow-glow);
+}
+
+/* ---- SCROLLBAR ------------------------------------------- */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background:    var(--border-hover);
+    border-radius: 3px;
+}
+
+/* ---- SELECTION ------------------------------------------- */
+::selection {
+    background: var(--cyan-glow);
+    color:      var(--cyan);
+}
+
+/* ---- ANIMATIONS ------------------------------------------ */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+    0%,100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+    50%     { box-shadow: 0 0 20px 4px rgba(0, 229, 255, 0.2); }
+}
+
+@keyframes blink {
+    0%,100% { opacity: 1; }
+    50%     { opacity: 0.3; }
+}
+
+@keyframes shimmer {
+    0%   { left: -100%; }
+    100% { left: 100%; }
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.4s ease both; }
+.animate-fade-in    { animation: fadeIn 0.3s ease both; }
+.animate-blink      { animation: blink 1.5s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
