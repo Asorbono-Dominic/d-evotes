@@ -34,7 +34,7 @@ app.use('/api/auth',      require('./routes/authRoutes'));
 app.use('/api/elections', require('./routes/electionRoutes'));
 app.use('/api/voters',    require('./routes/voterRoutes'));
 app.use('/api/votes',     require('./routes/voteRoutes'));
-app.use('/api/audit',     require('./routes/auditRoutes'));
+//app.use('/api/audit',     require('./routes/auditRoutes'));
 
 // ---- HEALTH CHECK -----------------------------------------
 app.get('/api/health', (req, res) => {
