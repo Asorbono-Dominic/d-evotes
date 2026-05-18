@@ -16,8 +16,9 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     // Check for admin token first, then voter token
     const adminToken = localStorage.getItem('admin_token');
-    const voterToken = localStorage.getItem('voter_token');
-    const token      = adminToken || voterToken;
+const voterToken = localStorage.getItem('voter_token');
+// For vote casting, prefer voter token over admin token
+const token      = voterToken || adminToken;
 
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
