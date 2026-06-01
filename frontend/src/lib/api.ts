@@ -126,3 +126,11 @@ export const votesAPI = {
                      api.get(`/votes/audit/${electionId}`, { params }),
     getAllLogs:  (params?: any) => api.get('/votes/audit/all', { params }),
 };
+
+//           EXPORT 
+export const exportAPI = {
+    downloadExcel: (electionId: string) =>
+        api.get(`/export/${electionId}/excel`, { responseType: 'blob' }),
+    downloadPDF: (electionId: string) =>
+        api.get(`/export/${electionId}/pdf`, { responseType: 'blob' }),
+};

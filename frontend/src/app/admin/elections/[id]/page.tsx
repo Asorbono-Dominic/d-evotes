@@ -820,29 +820,66 @@ export default function ElectionManagePage() {
 
             {/* ---- RESULTS TAB ---- */}
             {activeTab === 'results' && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                    <div style={{ textAlign: 'center', padding: '2rem' }}>
-                        <Link
-                            href={`/results/${electionId}`}
-                            target="_blank"
-                            style={{
-                                display:        'inline-flex',
-                                alignItems:     'center',
-                                gap:            '0.5rem',
-                                background:     'linear-gradient(135deg, var(--cyan), var(--cyan-dim))',
-                                color:          '#050a0e',
-                                fontWeight:     700,
-                                fontSize:       '0.92rem',
-                                padding:        '0.85rem 1.75rem',
-                                borderRadius:   '10px',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            <Eye size={16} /> View Full Results Page
-                        </Link>
-                    </div>
-                </motion.div>
-            )}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', padding: '2rem' }}>
+            <Link
+                href={`/results/${electionId}`}
+                target="_blank"
+                style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                    background: 'linear-gradient(135deg, var(--cyan), var(--cyan-dim))',
+                    color: '#050a0e', fontWeight: 700, fontSize: '0.88rem',
+                    padding: '0.85rem 1.5rem', borderRadius: '8px', textDecoration: 'none',
+                }}
+            >
+                <Eye size={16} /> View Results Page
+            </Link>
+            <button
+                onClick={async () => {
+                    try {
+                        const { exportAPI } = await import('@/lib/api');
+                        const res = await exportAPI.downloadExcel(electionId);
+                        const url = URL.createObjectURL(new Blob([res.data]));
+                        const a   = document.createElement('a');
+                        a.href    = url;
+                        a.download = `results_${electionId}.xlsx`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    } catch { toast.error('Export failed.'); }
+                }}
+                style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                    background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.25)',
+                    color: 'var(--green)', fontFamily: 'var(--font-space)',
+                    fontWeight: 700, fontSize: '0.88rem',
+                    padding: '0.85rem 1.5rem', borderRadius: '8px', cursor: 'pointer',
+                }}
+            >
+                📊 Export Excel
+            </button>
+            <button
+                onClick={async () => {
+                    try {
+                        const { exportAPI } = await import('@/lib/api');
+                        const res = await exportAPI.downloadPDF(electionId);
+                        const url = URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+                        const a   = document.createElement('a');
+                        a.href    = url;
+                        a.download = `results_${electionId}.pdf`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    } catch { toast.error('Export failed.'); }
+                }}
+                style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                    background: 'rgba(255,77,109,0.1)', border: '1px solid rgba(255,77,109,0.25)',
+                    color: 'var(--red)', fontFamily: 'var(--font-space)',
+                    fontWeight: 700, fontSize: '0.88rem',
+                    padding: '0.85rem 1.5rem', borderRadius: '8px', cursor: 'pointer',
+                }}
+            >
+                📄 Export PDF
+            </button>
         </div>
-    );
-}
+    </motion.div>
+)}

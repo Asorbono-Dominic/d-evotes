@@ -292,7 +292,7 @@ export default function VoterLoginPage() {
                         textDecoration: 'none',
                         fontWeight:     600,
                     }}>
-                        Generate one here
+                        Click here to generate one 
                     </Link>
                 </div>
             </motion.div>

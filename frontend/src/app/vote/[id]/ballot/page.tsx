@@ -12,6 +12,8 @@ import { electionsAPI, votesAPI } from '@/lib/api';
 import ThemeToggle               from '@/components/ThemeToggle';
 import toast                     from 'react-hot-toast';
 import Image                     from 'next/image';
+import Link from 'next/dist/client/link';
+import Link from 'next/link';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
@@ -369,6 +371,20 @@ export default function BallotPage() {
                                                 {candidate.bio.length > 80 ? '...' : ''}
                                             </div>
                                         )}
+                                    <Link
+                                             href={`/election/${electionId}/candidate/${candidate.id}`}
+                                        style={{
+                                            display:        'block',
+                                            fontSize:       '0.72rem',
+                                            color:          'var(--cyan)',
+                                            textDecoration: 'none',
+                                            marginTop:      '0.6rem',
+                                            opacity:        0.8,
+                                         }}
+                                         onClick={(e) => e.stopPropagation()}
+>
+                                        View Profile →
+                                    </Link>
                                     </motion.div>
                                 );
                             })}

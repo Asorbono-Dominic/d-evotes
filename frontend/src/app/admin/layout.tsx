@@ -6,7 +6,7 @@ import { motion, AnimatePresence }  from 'framer-motion';
 import {
     LayoutDashboard, Vote, Users, Settings,
     LogOut, ExternalLink, ShieldCheck,
-    ChevronRight, ChevronLeft, Sun, Moon,
+    ChevronRight, ChevronLeft, Sun, Moon,ClipboardList,
 } from 'lucide-react';
 import { useAdminStore, useThemeStore } from '@/lib/store';
 import Link                         from 'next/link';
@@ -16,6 +16,7 @@ const navItems = [
     { href: '/admin/elections', icon: <Vote size={18} />,            label: 'Elections'  },
     { href: '/admin/admins',    icon: <Users size={18} />,           label: 'Admins',    superOnly: true },
     { href: '/admin/settings',  icon: <Settings size={18} />,        label: 'Settings'   },
+    { href: '/admin/audit', icon: <ClipboardList size={18} />, label: 'Audit Log' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
